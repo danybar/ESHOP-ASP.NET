@@ -1,0 +1,37 @@
+﻿@model List<CarouselSlide>
+@{
+    ViewData["Title"] = "Carousel items";
+}
+<h1>@ViewData["Title"]</h1>
+
+<a asp-area="Admin" asp-controller="Carousel" asp-action="Create">Create new Carousel</a>
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Image Source</th>
+                    <th scope="col">Image Alternative Text</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var carouselSlide in Model)
+                    {
+                        <tr>
+                            <th scope="row">@carouselSlide.ID</th>
+                            <td>@carouselSlide.ImageSrc</td>
+                            <td>@carouselSlide.ImageAlt</td>
+                            <td><a asp-area="Admin" asp-controller="Carousel" asp-action="Edit" asp-route-ID="@carouselSlide.ID">Edit</a></td>
+                            <td><a asp-area="Admin" asp-controller="Carousel" asp-action="Delete" asp-route-ID="@carouselSlide.ID">Delete</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}
