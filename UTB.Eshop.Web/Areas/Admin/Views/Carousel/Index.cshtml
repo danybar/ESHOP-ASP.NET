@@ -27,11 +27,16 @@
                             <td>@carouselSlide.ImageSrc</td>
                             <td>@carouselSlide.ImageAlt</td>
                             <td><a asp-area="Admin" asp-controller="Carousel" asp-action="Edit" asp-route-ID="@carouselSlide.ID">Edit</a></td>
-                            <td><a asp-area="Admin" asp-controller="Carousel" asp-action="Delete" asp-route-ID="@carouselSlide.ID">Delete</a></td>
+                            <td><a asp-area="Admin" asp-controller="Carousel" asp-action="Delete" asp-route-ID="@carouselSlide.ID" onclick="return ConfirmDelete();">Delete</a></td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
     }
+}
+
+@section Scripts
+{
+    <script src="~/js/dialogs.js"></script>
 }
