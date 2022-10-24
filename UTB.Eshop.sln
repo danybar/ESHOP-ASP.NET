@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTB.Eshop.Web", "UTB.Eshop.Web\UTB.Eshop.Web.csproj", "{606672E3-6AC2-44A8-8254-AB61CE54AC07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTB.Eshop.Web", "UTB.Eshop.Web\UTB.Eshop.Web.csproj", "{606672E3-6AC2-44A8-8254-AB61CE54AC07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTB.Eshop.Domain.Abstraction", "UTB.Eshop.Domain.Abstraction\UTB.Eshop.Domain.Abstraction.csproj", "{006F3C5E-20F6-4632-A2D5-A34CAA07DF4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTB.Eshop.Domain.Implementation", "UTB.Eshop.Domain.Implementation\UTB.Eshop.Domain.Implementation.csproj", "{B3CAA59D-04D3-4D03-937D-F611D9E42195}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{606672E3-6AC2-44A8-8254-AB61CE54AC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{606672E3-6AC2-44A8-8254-AB61CE54AC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{606672E3-6AC2-44A8-8254-AB61CE54AC07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006F3C5E-20F6-4632-A2D5-A34CAA07DF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006F3C5E-20F6-4632-A2D5-A34CAA07DF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006F3C5E-20F6-4632-A2D5-A34CAA07DF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006F3C5E-20F6-4632-A2D5-A34CAA07DF4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3CAA59D-04D3-4D03-937D-F611D9E42195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3CAA59D-04D3-4D03-937D-F611D9E42195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3CAA59D-04D3-4D03-937D-F611D9E42195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3CAA59D-04D3-4D03-937D-F611D9E42195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

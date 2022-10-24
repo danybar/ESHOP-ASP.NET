@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UTB.Eshop.Domain.Abstraction;
+using UTB.Eshop.Domain.Implementation;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web
@@ -26,6 +28,13 @@ namespace UTB.Eshop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EshopDbContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnectionString"), new MySqlServerVersion("8.0.26")));
+
+            //<><>*
+            services.AddScoped<FileUpload>(serviceProvider => new FileUpload(serviceProvider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
+            services.AddScoped<IFileUpload>(servicesProvider => servicesProvider.GetRequiredService<FileUpload>());
+            services.AddScoped<ICheckFileContent>(servicesProvider => servicesProvider.GetRequiredService<FileUpload>());
+            services.AddScoped<ICheckFileLength>(servicesProvider => servicesProvider.GetRequiredService<FileUpload>());
+            //*<><>
 
             services.AddControllersWithViews();
         }
