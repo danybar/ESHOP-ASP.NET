@@ -10,13 +10,25 @@
                     <input asp-for="ID" type="hidden" />
                 }
             }
+            <div asp-validation-summary="All"></div>
             <div class="form-group">
                 <label asp-for="Image">Image</label>
-                <input asp-for="Image" class="form-control-file">
+                @{
+                    if (ViewBag.Akce == "Edit")
+                    {
+                        <input asp-for="Image" class="form-control-file">
+                    }
+                    else
+                    {
+                        <input asp-for="Image" class="form-control-file" data-val-required="The Image field is required.">
+                    }
+                }
+                <span asp-validation-for="Image"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImageAlt">Image Alternative Text</label>
                 <input asp-for="ImageAlt" class="form-control" placeholder="Enter alternative text ...">
+                <span asp-validation-for="ImageAlt"></span>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

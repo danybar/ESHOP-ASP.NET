@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UTB.Eshop.Domain.Abstraction;
 using UTB.Eshop.Web.Models.Database;
 using UTB.Eshop.Web.Models.Entities;
+using UTB.Eshop.Web.Models.ViewModels;
 
 namespace UTB.Eshop.Web.Areas.Admin.Controllers
 {
@@ -41,25 +42,30 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CarouselSlide carouselSlide)
+        public async Task<IActionResult> Create(CarouselSlideFileRequired carouselSlide)
         {
-            if (checkFileContent.CheckFileContent(carouselSlide.Image, "image")
-                && checkFileLength.CheckFileLength(carouselSlide.Image, 5_000_000))
+            ModelState.Remove(nameof(CarouselSlide.ImageSrc));
+            if (ModelState.IsValid)
             {
-
-                fileUpload.ContentType = "image";
-                fileUpload.FileLength = 5_000_000;
-                carouselSlide.ImageSrc = await fileUpload.FileUploadAsync(carouselSlide.Image, Path.Combine("img", "carousel"));
-
-                if (String.IsNullOrEmpty(carouselSlide.ImageSrc) == false)
+                if (checkFileLength.CheckFileLength(carouselSlide.Image, 5_000_000))
                 {
-                    eshopDb.CarouselSlides.Add(carouselSlide);
 
-                    eshopDb.SaveChanges();
+                    fileUpload.ContentType = "image";
+                    fileUpload.FileLength = 5_000_000;
+                    carouselSlide.ImageSrc = await fileUpload.FileUploadAsync(carouselSlide.Image, Path.Combine("img", "carousel"));
 
-                    return RedirectToAction(nameof(CarouselController.Index));
+                    ModelState.Clear();
+                    bool validated = TryValidateModel(carouselSlide);
+                    if (validated)
+                    {
+                        eshopDb.CarouselSlides.Add(carouselSlide);
+
+                        eshopDb.SaveChanges();
+
+                        return RedirectToAction(nameof(CarouselController.Index));
+                    }
+
                 }
-
             }
 
             return View(carouselSlide);
@@ -69,7 +75,7 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         public IActionResult Edit(int ID)
         {
             CarouselSlide carSlide = eshopDb.CarouselSlides.FirstOrDefault(carouselItem => carouselItem.ID == ID);
-            
+
             if (carSlide != null)
             {
                 return View(carSlide);
@@ -85,25 +91,42 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
 
             if (carSlide != null)
             {
-                if (checkFileContent.CheckFileContent(carouselSlide.Image, "image")
-                && checkFileLength.CheckFileLength(carouselSlide.Image, 5_000_000))
+                ModelState.Remove(nameof(CarouselSlide.ImageSrc));
+                if (ModelState.IsValid)
                 {
-
-                    fileUpload.ContentType = "image";
-                    fileUpload.FileLength = 5_000_000;
-                    carouselSlide.ImageSrc = await fileUpload.FileUploadAsync(carouselSlide.Image, Path.Combine("img", "carousel"));
-
-                    if (String.IsNullOrEmpty(carouselSlide.ImageSrc) == false)
+                    if (carouselSlide.Image != null)
                     {
-                        carSlide.ImageSrc = carouselSlide.ImageSrc;
+                        if (checkFileLength.CheckFileLength(carouselSlide.Image, 5_000_000))
+                        {
+
+                            fileUpload.ContentType = "image";
+                            fileUpload.FileLength = 5_000_000;
+                            carouselSlide.ImageSrc = await fileUpload.FileUploadAsync(carouselSlide.Image, Path.Combine("img", "carousel"));
+
+                            ModelState.Clear();
+                            if (TryValidateModel(carouselSlide))
+                            {
+                                carSlide.ImageSrc = carouselSlide.ImageSrc;
+                            }
+                            else
+                            {
+                                return View(carouselSlide);
+                            }
+                        }
+                        else
+                        {
+                            return View(carouselSlide);
+                        }
                     }
+
+                    carSlide.ImageAlt = carouselSlide.ImageAlt;
+
+                    eshopDb.SaveChanges();
+
+                    return RedirectToAction(nameof(CarouselController.Index));
                 }
-
-                carSlide.ImageAlt = carouselSlide.ImageAlt;
-
-                eshopDb.SaveChanges();
-
-                return RedirectToAction(nameof(CarouselController.Index));
+                else
+                    return View(carouselSlide);
             }
 
             return NotFound();
