@@ -24,11 +24,30 @@ namespace UTB.Eshop.Web.Areas.Security.Controllers
             return View();
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerVM)
         {
+            if(ModelState.IsValid)
+            {
+                string[] errors = await securityService.Register(registerVM, Models.Identity.Roles.Customer);
+                if (errors == null)
+                {
+                    LoginViewModel loginViewModel = new LoginViewModel()
+                    {
+                        Username = registerVM.Username,
+                        Password = registerVM.Password
+                    };
 
-        }*/
+                    return await Login(loginViewModel);
+                }
+                else
+                {
+                    //logovani chyb
+                }
+            }
+
+            return View(registerVM);
+        }
 
 
         public IActionResult Login()
@@ -36,11 +55,18 @@ namespace UTB.Eshop.Web.Areas.Security.Controllers
             return View();
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
+            if (ModelState.IsValid)
+            {
+                loginVM.LoginFailed = !await securityService.Login(loginVM);
+                if (loginVM.LoginFailed == false)
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", String.Empty), new { area = String.Empty });
+            }
 
-        }*/
+            return View(loginVM);
+        }
 
 
         public async Task<IActionResult> Logout()

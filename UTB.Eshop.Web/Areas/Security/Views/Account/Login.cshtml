@@ -20,16 +20,16 @@
         <p style="text-align:center">OR</p>
         <hr>
         <div asp-validation-summary="All" class="text-danger"></div>
-        @{
-            if (Model?.LoginFailed == true)
-            {
-                <div class="text-danger">Login Failed!</div>
-            }
+        @{ if (Model?.LoginFailed == true)
+                        {
+            <div class="text-danger">Login Failed!</div> }
          }
-        
+
 
         <input asp-for="Username" type="text" id="inputUsername" class="form-control" placeholder="Usename" autofocus="">
+        <span asp-validation-for="Username" class="text-danger"></span>
         <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password">
+        <span asp-validation-for="Password" class="text-danger"></span>
         <br />
 
         <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
