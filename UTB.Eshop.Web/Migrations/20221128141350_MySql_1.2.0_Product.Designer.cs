@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128141350_MySql_1.2.0_Product")]
+    partial class MySql_120_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,62 +182,6 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "Third slide",
                             ImageSrc = "/img/carousel/1581481407499.jpeg"
                         });
-                });
-
-            modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateTimeCreated")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("NOW(6)");
-
-                    b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("double");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.OrderItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("OrderID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.Product", b =>
@@ -496,41 +442,6 @@ namespace UTB.Eshop.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.Order", b =>
-                {
-                    b.HasOne("UTB.Eshop.Web.Models.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.OrderItem", b =>
-                {
-                    b.HasOne("UTB.Eshop.Web.Models.Entities.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UTB.Eshop.Web.Models.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("UTB.Eshop.Web.Models.Entities.Order", b =>
-                {
-                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }
