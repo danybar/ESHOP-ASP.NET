@@ -98,6 +98,7 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
                     foreach (OrderItem orderItem in orderItems)
                     {
                         totalPrice += orderItem.Product.Price * orderItem.Amount;
+                        //totalPrice += orderItem.Price;
                         orderItem.Product = null; //zde musime nullovat referenci na produkt, jinak by doslo o pokus jej znovu vlozit do databaze
                     }
 
