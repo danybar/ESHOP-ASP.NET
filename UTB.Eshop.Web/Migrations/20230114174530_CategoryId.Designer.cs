@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230114174530_CategoryId")]
+    partial class CategoryId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

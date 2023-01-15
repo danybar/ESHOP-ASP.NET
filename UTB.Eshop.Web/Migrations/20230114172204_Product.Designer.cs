@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230114172204_Product")]
+    partial class Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,35 +264,35 @@ namespace UTB.Eshop.Web.Migrations
                         new
                         {
                             ID = 1,
-                            CategoryId = 1,
+                            CategoryId = 0,
                             Name = "Chleba",
                             Price = 100.0
                         },
                         new
                         {
                             ID = 2,
-                            CategoryId = 2,
+                            CategoryId = 0,
                             Name = "Máslo",
                             Price = 75.0
                         },
                         new
                         {
                             ID = 3,
-                            CategoryId = 3,
+                            CategoryId = 0,
                             Name = "Perlivě neperlivá voda",
                             Price = 40.0
                         },
                         new
                         {
                             ID = 4,
-                            CategoryId = 1,
+                            CategoryId = 0,
                             Name = "Tácek",
                             Price = 10.0
                         },
                         new
                         {
                             ID = 5,
-                            CategoryId = 2,
+                            CategoryId = 0,
                             Name = "Ubrousky",
                             Price = 50.0
                         });

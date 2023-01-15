@@ -1,0 +1,46 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Category";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+@{
+    if (Model != null && Model.Products != null && Model.Products.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Button</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="Buy(@product.ID,'@Url.Action("AddOrderItemsToSession", "CustomerOrderNotCart", new { Area = "Customer" })', '#total_price', '@System.Globalization.CultureInfo.CurrentCulture.Name')">Buy</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}
+
+
+@section Scripts
+{
+    <environment include="Development">
+        <script src="~/js/Product.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Product.min.js"></script>
+    </environment>
+}

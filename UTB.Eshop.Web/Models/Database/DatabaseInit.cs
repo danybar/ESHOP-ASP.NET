@@ -52,35 +52,40 @@ namespace UTB.Eshop.Web.Models.Database
             {
                 ID = 1,
                 Name = "Chleba",
-                Price = 100
+                Price = 100,
+                CategoryId = 1
             };
 
             Product cs2 = new Product()
             {
                 ID = 2,
                 Name = "Máslo",
-                Price = 75
+                Price = 75,
+                CategoryId = 2
             };
 
             Product cs3 = new Product()
             {
                 ID = 3,
                 Name = "Perlivě neperlivá voda",
-                Price = 40
+                Price = 40,
+                CategoryId = 3
             };
 
             Product cs4 = new Product()
             {
                 ID = 4,
                 Name = "Tácek",
-                Price = 10
+                Price = 10,
+                CategoryId = 1
             };
 
             Product cs5 = new Product()
             {
                 ID = 5,
                 Name = "Ubrousky",
-                Price = 50
+                Price = 50,
+                CategoryId = 2
             };
 
             products.Add(cs1);
