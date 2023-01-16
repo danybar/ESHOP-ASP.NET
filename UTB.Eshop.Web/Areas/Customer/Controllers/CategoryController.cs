@@ -21,7 +21,7 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, int? category)
         {
 
             int pageSize = 3;
@@ -29,14 +29,20 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
 
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            List<Product> products = eshopDb.Products.ToPagedList(pageIndex, pageSize).ToList();
+            if (category != null) {
+                List<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).ToPagedList(pageIndex, pageSize).ToList();
+                ProductViewModel hiVM = new ProductViewModel(){ Products = products};
 
-            ProductViewModel hiVM = new ProductViewModel()
-            {
-                Products = products
-                
-            };
-             return View(hiVM);
+                return View(hiVM);
+            }
+
+            else {
+                List<Product> products = eshopDb.Products.ToPagedList(pageIndex, pageSize).ToList();
+                ProductViewModel hiVM = new ProductViewModel(){Products = products};return View(hiVM);
+                }
+
         }
     }
+
 }
+
