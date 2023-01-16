@@ -23,8 +23,13 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">CategoryId</label>
+                <input asp-for="CategoryId" class="form-control" />
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
              <div class="form-group">
-                <label asp-for="Image">Image</label>
+                <label asp-for="ImageSrc">Image</label>
                 <input asp-for="Image" class="form-control-file" data-val-required="The Image field is required.">
                 <span asp-validation-for="Image"></span>
             </div>

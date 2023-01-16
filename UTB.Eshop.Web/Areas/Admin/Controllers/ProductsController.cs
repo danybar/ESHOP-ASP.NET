@@ -25,9 +25,9 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         ICheckFileContent checkFileContent;
         ICheckFileLength checkFileLength;
         public ProductsController(EshopDbContext eshopDbContext,
-                                    IFileUpload fileUpload,
-                                    ICheckFileContent checkFileContent,
-                                    ICheckFileLength checkFileLength)
+            IFileUpload fileUpload,
+            ICheckFileContent checkFileContent,
+            ICheckFileLength checkFileLength)
         {
             _context = eshopDbContext;
             this.fileUpload = fileUpload;
@@ -106,34 +106,35 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price")] Product product)
+        public async Task<IActionResult> Edit(int id, ProductFileRequired product)
         {
             if (id != product.ID)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                fileUpload.ContentType = "image";
+                fileUpload.FileLength = 5_000_000;
+                product.ImageSrc = await fileUpload.FileUploadAsync(product.Image, Path.Combine("img", "product"));
+
+                _context.Update(product);
+                await _context.SaveChangesAsync();
             }
-            return View(product);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(product.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+           
         }
 
         // GET: Admin/Products/Delete/5
