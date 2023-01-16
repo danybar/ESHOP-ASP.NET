@@ -53,7 +53,10 @@ namespace UTB.Eshop.Web.Models.Database
                 ID = 1,
                 Name = "Chleba",
                 Price = 100,
-                CategoryId = 1
+                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
+                ImageAlt = "First slide",
+                CategoryId = "zelenina"
+
             };
 
             Product cs2 = new Product()
@@ -61,7 +64,9 @@ namespace UTB.Eshop.Web.Models.Database
                 ID = 2,
                 Name = "Máslo",
                 Price = 75,
-                CategoryId = 2
+                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
+                ImageAlt = "First slide",
+                CategoryId = "ovoce"
             };
 
             Product cs3 = new Product()
@@ -69,7 +74,9 @@ namespace UTB.Eshop.Web.Models.Database
                 ID = 3,
                 Name = "Perlivě neperlivá voda",
                 Price = 40,
-                CategoryId = 3
+                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
+                ImageAlt = "First slide",
+                CategoryId = "zelenina"
             };
 
             Product cs4 = new Product()
@@ -77,7 +84,9 @@ namespace UTB.Eshop.Web.Models.Database
                 ID = 4,
                 Name = "Tácek",
                 Price = 10,
-                CategoryId = 1
+                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
+                ImageAlt = "First slide",
+                CategoryId = "ovoce"
             };
 
             Product cs5 = new Product()
@@ -85,7 +94,9 @@ namespace UTB.Eshop.Web.Models.Database
                 ID = 5,
                 Name = "Ubrousky",
                 Price = 50,
-                CategoryId = 2
+                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
+                ImageAlt = "First slide",
+                CategoryId = "zelenina"
             };
 
             products.Add(cs1);

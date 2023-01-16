@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UTB.Eshop.Domain.Implementation.Validations;
 
 namespace UTB.Eshop.Web.Models.Entities
 {
@@ -16,7 +18,18 @@ namespace UTB.Eshop.Web.Models.Entities
         [Range(0, double.MaxValue)]
         public double Price { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int CategoryId { get; set; }
+        [NotMapped]
+        [FileContent("image")]
+        [FileSize(500_000_000)]
+        public virtual IFormFile Image { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string ImageSrc { get; set; }
+
+        public string ImageAlt { get; set; }
+
+        [StringLength(50)]
+        public string CategoryId { get; set; }
     }
 }

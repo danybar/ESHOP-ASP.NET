@@ -1,4 +1,4 @@
-﻿@model UTB.Eshop.Web.Models.Entities.Product
+﻿@model ProductFileRequired
 
 @{
     ViewData["Title"] = "Create";
@@ -10,8 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -23,6 +23,21 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Kategorie</label>
+                <input asp-for="CategoryId" class="form-control" />
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Image">Image</label>
+                <input asp-for="Image" class="form-control-file" data-val-required="The Image field is required.">
+                <span asp-validation-for="Image"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="ImageAlt">Image Alternative Text</label>
+                <input asp-for="ImageAlt" class="form-control" placeholder="Enter alternative text ...">
+                <span asp-validation-for="ImageAlt"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -32,4 +47,11 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/FileContentValidation.js"></script>
+    <script src="~/js/FileSizeValidation.js"></script>
+}
 

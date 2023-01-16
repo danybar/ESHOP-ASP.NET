@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using UTB.Eshop.Domain.Abstraction;
 using UTB.Eshop.Web.Models.Database;
 using UTB.Eshop.Web.Models.Entities;
 using UTB.Eshop.Web.Models.Identity;
+using UTB.Eshop.Web.Models.ViewModels;
 
 namespace UTB.Eshop.Web.Areas.Admin.Controllers
 {
@@ -18,9 +21,18 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
     {
         private readonly EshopDbContext _context;
 
-        public ProductsController(EshopDbContext context)
+        IFileUpload fileUpload;
+        ICheckFileContent checkFileContent;
+        ICheckFileLength checkFileLength;
+        public ProductsController(EshopDbContext eshopDbContext,
+                                    IFileUpload fileUpload,
+                                    ICheckFileContent checkFileContent,
+                                    ICheckFileLength checkFileLength)
         {
-            _context = context;
+            _context = eshopDbContext;
+            this.fileUpload = fileUpload;
+            this.checkFileContent = checkFileContent;
+            this.checkFileLength = checkFileLength;
         }
 
         // GET: Admin/Products
@@ -58,8 +70,12 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Price")] Product product)
+        public async Task<IActionResult> Create(ProductFileRequired product)
         {
+            ModelState.Remove(nameof(Product.ImageSrc));
+            fileUpload.ContentType = "image";
+            fileUpload.FileLength = 5_000_000;
+            product.ImageSrc = await fileUpload.FileUploadAsync(product.Image, Path.Combine("img", "product"));
             if (ModelState.IsValid)
             {
                 _context.Add(product);

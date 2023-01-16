@@ -21,7 +21,7 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? page, int? category)
+        public IActionResult Index(int? page, string category)
         {
 
             int pageSize = 3;

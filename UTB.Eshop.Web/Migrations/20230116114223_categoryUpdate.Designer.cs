@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230116114223_categoryUpdate")]
+    partial class categoryUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,14 +250,6 @@ namespace UTB.Eshop.Web.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("ImageAlt")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ImageSrc")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
@@ -272,8 +266,6 @@ namespace UTB.Eshop.Web.Migrations
                         {
                             ID = 1,
                             CategoryId = "zelenina",
-                            ImageAlt = "First slide",
-                            ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
                             Name = "Chleba",
                             Price = 100.0
                         },
@@ -281,8 +273,6 @@ namespace UTB.Eshop.Web.Migrations
                         {
                             ID = 2,
                             CategoryId = "ovoce",
-                            ImageAlt = "First slide",
-                            ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
                             Name = "Máslo",
                             Price = 75.0
                         },
@@ -290,8 +280,6 @@ namespace UTB.Eshop.Web.Migrations
                         {
                             ID = 3,
                             CategoryId = "zelenina",
-                            ImageAlt = "First slide",
-                            ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
                             Name = "Perlivě neperlivá voda",
                             Price = 40.0
                         },
@@ -299,8 +287,6 @@ namespace UTB.Eshop.Web.Migrations
                         {
                             ID = 4,
                             CategoryId = "ovoce",
-                            ImageAlt = "First slide",
-                            ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
                             Name = "Tácek",
                             Price = 10.0
                         },
@@ -308,8 +294,6 @@ namespace UTB.Eshop.Web.Migrations
                         {
                             ID = 5,
                             CategoryId = "zelenina",
-                            ImageAlt = "First slide",
-                            ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
                             Name = "Ubrousky",
                             Price = 50.0
                         });
