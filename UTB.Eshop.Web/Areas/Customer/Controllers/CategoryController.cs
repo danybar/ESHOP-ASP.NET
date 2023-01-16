@@ -4,7 +4,7 @@ using System.Linq;
 using UTB.Eshop.Web.Models.Database;
 using UTB.Eshop.Web.Models.Entities;
 using UTB.Eshop.Web.Models.ViewModels;
-using PagedList;
+using X.PagedList;
 using System;
 
 namespace UTB.Eshop.Web.Areas.Customer.Controllers
@@ -30,16 +30,14 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
             if (category != null) {
-                List<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).ToPagedList(pageIndex, pageSize).ToList();
-                ProductViewModel hiVM = new ProductViewModel(){ Products = products};
-
-                return View(hiVM);
+                IPagedList<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).ToPagedList(pageIndex, pageSize);
+                return View(products);
             }
 
             else {
-                List<Product> products = eshopDb.Products.ToPagedList(pageIndex, pageSize).ToList();
-                ProductViewModel hiVM = new ProductViewModel(){Products = products};return View(hiVM);
-                }
+                IPagedList<Product> products = eshopDb.Products.ToPagedList(pageIndex, pageSize);
+                return View(products);
+            }
 
         }
     }

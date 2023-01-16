@@ -20,7 +20,7 @@ namespace UTB.Eshop.Web.Models.Entities
 
         [NotMapped]
         [FileContent("image")]
-        [FileSize(500_000_000)]
+        [FileSize(50)]
         public virtual IFormFile Image { get; set; }
 
         [Required]

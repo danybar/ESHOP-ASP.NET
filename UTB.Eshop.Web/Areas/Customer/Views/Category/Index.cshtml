@@ -1,44 +1,39 @@
-﻿@model ProductViewModel
-@using PagedList;
-@using PagedList.Mvc;
-@using UTB.Eshop.Web.Models.ViewModels
+﻿@using X.PagedList.Mvc.Core; 
+@using X.PagedList; 
+@using X.PagedList.Mvc.Common
+@using System.Web;
+@using X.PagedList.Mvc.Core.Fluent
+@model IPagedList<Product>
 
 @{
-    ViewData["Title"] = "Category";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-@{
-    if (Model != null && Model.Products != null && Model.Products.Count > 0)
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Button</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var product in Model.Products)
-                    {
-                        <tr>
-                            <td>@product.Name</td>
-                            <td>@product.Price</td>
-                            <td>
+    <h1 align="center" style="padding-top: 40px;">Produkty v kategorii</h1>
+
+    <section style="padding-top: 40px; padding-bottom: 50px">
+        <div class="container">
+            <div class="row">
+                @foreach (var product in Model){
+                    <div class="col-4">
+                        <div class="card">
+                            <img class="card-img-top" src="@product.ImageSrc" alt="@product.ImageAlt">
+                                <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">Cena: @product.Price,- Kč</p>
+                                <a asp-area="admin" asp-controller="products" asp-action="Details" asp-route-id="@product.ID" class="btn btn-primary">Detail</a>
                                 <button type="button" class="btn btn-danger" onclick="Buy(@product.ID,'@Url.Action("AddOrderItemsToSession", "CustomerOrderNotCart", new { Area = "Customer" })', '#total_price', '@System.Globalization.CultureInfo.CurrentCulture.Name')">Buy</button>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
+                    </div>
                     }
-                }
-            </tbody>
-        </table>
-   }
+            </div>
+        </div>
+    </section>
 }
 
-
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<nav aria-label="Page navigation example">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new{page = page}))
+ </nav>
 @section Scripts
 {
     <environment include="Development">
