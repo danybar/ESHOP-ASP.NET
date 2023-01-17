@@ -6,22 +6,34 @@ using UTB.Eshop.Web.Models.Entities;
 using UTB.Eshop.Web.Models.ViewModels;
 using X.PagedList;
 using System;
+using System.Threading.Tasks;
+using System.IO;
+using UTB.Eshop.Domain.Abstraction;
+using Microsoft.EntityFrameworkCore;
 
 namespace UTB.Eshop.Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
-
     public class CategoryController : Controller
     {
         readonly EshopDbContext eshopDb;
 
-        public CategoryController(EshopDbContext eshopDbContext)
+        IFileUpload fileUpload;
+        ICheckFileContent checkFileContent;
+        ICheckFileLength checkFileLength;
+        public CategoryController(EshopDbContext eshopDbContext,
+            IFileUpload fileUpload,
+            ICheckFileContent checkFileContent,
+            ICheckFileLength checkFileLength)
         {
             eshopDb = eshopDbContext;
+            this.fileUpload = fileUpload;
+            this.checkFileContent = checkFileContent;
+            this.checkFileLength = checkFileLength;
         }
 
         [HttpGet]
-        public IActionResult Index(int? page, string category)
+        public IActionResult Index(int? page, string category, string sort)
         {
 
             int pageSize = 3;
@@ -30,16 +42,120 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
             if (category != null) {
+                ViewBag.category = category;
                 IPagedList<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).ToPagedList(pageIndex, pageSize);
                 return View(products);
             }
+            
+            return Redirect("../Home#category");
+        }
 
-            else {
-                IPagedList<Product> products = eshopDb.Products.ToPagedList(pageIndex, pageSize);
-                return View(products);
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CategoryFileRequired category)
+        {
+            ModelState.Remove(nameof(Category.ImageSrc));
+            fileUpload.ContentType = "image";
+            fileUpload.FileLength = 5_000_000;
+            category.ImageSrc = await fileUpload.FileUploadAsync(category.Image, Path.Combine("img", "product"));
+
+            if (ModelState.IsValid)
+            {
+                eshopDb.Add(category);
+                await eshopDb.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
             }
 
+            var category = await eshopDb.Category.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CategoryFileRequired category)
+        {
+            if (id != category.ID)
+            {
+                return NotFound();
+            }
+            try
+            {
+                fileUpload.ContentType = "image";
+                fileUpload.FileLength = 5_000_000;
+
+                category.ImageSrc = await fileUpload.FileUploadAsync(category.Image, Path.Combine("img", "product"));
+
+                eshopDb.Update(category);
+                await eshopDb.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(category.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = await eshopDb.Category
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var category = await eshopDb.Category.FindAsync(id);
+            eshopDb.Category.Remove(category);
+            await eshopDb.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CategoryExists(int id)
+        {
+            return eshopDb.Category.Any(e => e.ID == id);
+        }
+
+
     }
 
 }

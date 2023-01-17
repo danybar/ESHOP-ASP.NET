@@ -48,7 +48,7 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
                     ProductID = product.ID,
                     Product = product,
                     Amount = 1,
-                    Price = product.Price   //zde pozor na datový typ -> pokud máte Price v obou případech double nebo decimal, tak je to OK. Mě se bohužel povedlo mít to jednou jako decimal a jednou jako double. Nejlepší je datový typ změnit v databázi/třídě, tak to prosím udělejte.
+                    Price = product.Price 
                 };
 
                 if (HttpContext.Session.IsAvailable)
@@ -90,7 +90,6 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
             if (HttpContext.Session.IsAvailable)
             {
 
-
                 double totalPrice = 0;
                 List<OrderItem> orderItems = HttpContext.Session.GetObject<List<OrderItem>>(orderItemsString);
                 if (orderItems != null)
@@ -110,10 +109,8 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
                         OrderNumber = Convert.ToBase64String(Guid.NewGuid().ToByteArray()),
                         TotalPrice = totalPrice,
                         OrderItems = orderItems,
-                        UserId = currentUser.Id
+                        UserId = currentUser.Id,
                     };
-
-
 
                     //We can add just the order; order items will be added automatically.
                     await EshopDbContext.AddAsync(order);

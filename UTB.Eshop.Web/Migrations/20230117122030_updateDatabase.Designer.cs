@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UTB.Eshop.Web.Models.Database;
 
 namespace UTB.Eshop.Web.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230117122030_updateDatabase")]
+    partial class updateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,9 +312,6 @@ namespace UTB.Eshop.Web.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<int>("SellCount")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("Product");
@@ -325,8 +324,7 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "paprika",
                             ImageSrc = "/img/product/paprika.png",
                             Name = "Paprika",
-                            Price = 100.0,
-                            SellCount = 0
+                            Price = 100.0
                         },
                         new
                         {
@@ -335,8 +333,7 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "jahody",
                             ImageSrc = "/img/product/jahody.png",
                             Name = "Jahody",
-                            Price = 75.0,
-                            SellCount = 0
+                            Price = 75.0
                         },
                         new
                         {
@@ -345,8 +342,7 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "mrkev",
                             ImageSrc = "/img/product/mrkev.png",
                             Name = "Mrkev",
-                            Price = 40.0,
-                            SellCount = 0
+                            Price = 40.0
                         },
                         new
                         {
@@ -355,8 +351,7 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "zelenina",
                             ImageSrc = "/img/product/spenat.png",
                             Name = "Špenát",
-                            Price = 10.0,
-                            SellCount = 0
+                            Price = 10.0
                         },
                         new
                         {
@@ -365,8 +360,7 @@ namespace UTB.Eshop.Web.Migrations
                             ImageAlt = "rajce",
                             ImageSrc = "/img/product/rajce.png",
                             Name = "Rajče",
-                            Price = 50.0,
-                            SellCount = 0
+                            Price = 50.0
                         });
                 });
 

@@ -62,6 +62,11 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         // GET: Admin/Products/Create
         public IActionResult Create()
         {
+            var categorylist = _context.Category.ToList();
+            if (categorylist != null)
+            {
+                ViewBag.data = categorylist;
+            }
             return View();
         }
 
@@ -72,6 +77,7 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductFileRequired product)
         {
+
             ModelState.Remove(nameof(Product.ImageSrc));
             fileUpload.ContentType = "image";
             fileUpload.FileLength = 5_000_000;
@@ -93,11 +99,18 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            var categorylist = _context.Category.ToList();
+            if (categorylist != null)
+            {
+                ViewBag.data = categorylist;
+            }
+
             var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
+
             return View(product);
         }
 
@@ -116,8 +129,9 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
             {
                 fileUpload.ContentType = "image";
                 fileUpload.FileLength = 5_000_000;
+               
                 product.ImageSrc = await fileUpload.FileUploadAsync(product.Image, Path.Combine("img", "product"));
-
+              
                 _context.Update(product);
                 await _context.SaveChangesAsync();
             }

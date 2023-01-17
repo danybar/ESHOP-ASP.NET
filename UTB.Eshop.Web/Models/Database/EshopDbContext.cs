@@ -16,6 +16,8 @@ namespace UTB.Eshop.Web.Models.Database
         public DbSet<CarouselSlide> CarouselSlides { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Category> Category { get; set; }
+
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
@@ -36,6 +38,7 @@ namespace UTB.Eshop.Web.Models.Database
             builder.Entity<CarouselSlide>().HasData(databaseInit.CreateCarouselSlides());
             builder.Entity<Product>().HasData(databaseInit.CreateProducts());
 
+            builder.Entity<Category>().HasData(databaseInit.CreateCategory());
 
             builder.Entity<Role>().HasData(databaseInit.CreateRoles());
 
@@ -47,6 +50,11 @@ namespace UTB.Eshop.Web.Models.Database
             builder.Entity<IdentityUserRole<int>>().HasData(managerUserRoles);
 
             builder.ApplyConfiguration<Order>(new OrderConfiguration());
+        }
+
+        internal object SqlQuery(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

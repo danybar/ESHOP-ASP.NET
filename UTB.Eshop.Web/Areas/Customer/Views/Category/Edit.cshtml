@@ -1,4 +1,4 @@
-﻿@model UTB.Eshop.Web.Models.Entities.Product
+﻿@model UTB.Eshop.Web.Models.Entities.Category
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,18 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">Kategorie</label>
-                @Html.DropDownList("CategoryId", new SelectList(ViewBag.data, "IdName", "IdName"))
+                <label asp-for="IdName" class="control-label">ID Name Category</label>
+                <input asp-for="IdName" class="form-control" />
+                <span asp-validation-for="IdName" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="Image">Image</label>
@@ -42,9 +33,5 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

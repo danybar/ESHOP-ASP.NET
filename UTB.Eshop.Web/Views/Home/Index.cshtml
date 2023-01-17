@@ -60,52 +60,32 @@
 }
 
 @{
-    if (Model != null && Model.Products != null && Model.Products.Count > 0)
+    if (Model != null && Model.Category.Count > 0)
     {
-        
-    <h1 align="center" style="padding-top: 40px;">Produkty</h1>
+        <h1 align="center" style="padding-top: 40px;">Kategorie</h1>
 
-    <section style="padding-top: 40px; padding-bottom: 50px">
-        <div class="container">
-            <div class="row">
-                @foreach (var product in Model.Products){
-                    <div class="col-4">
-                        <div class="card">
-                            <img class="card-img-top" src="@product.ImageSrc" alt="@product.ImageAlt">
+        <section style="padding-top: 40px; padding-bottom: 50px" id="category">
+            <div class="container">
+                <div class="row">
+                    @foreach (var product in Model.Category){
+                        <div class="col-4">
+                            <div class="card">
+                                <img class="card-img-top" src="@product.ImageSrc" alt="">
                                 <div class="card-body">
-                                <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text">Cena: @product.Price,- Kč</p>
-                                <a asp-area="admin" asp-controller="products" asp-action="Details" asp-route-id="@product.ID" class="btn btn-primary">Detail</a>
-                                <button type="button" class="btn btn-danger" onclick="Buy(@product.ID,'@Url.Action("AddOrderItemsToSession", "CustomerOrderNotCart", new { Area = "Customer" })', '#total_price', '@System.Globalization.CultureInfo.CurrentCulture.Name')">Buy</button>
+                                    <h5 class="card-title">@product.IdName</h5>
+                                    <a href="/Customer/Category/?category=@product.IdName" class="btn btn-primary">Seznam produktů</a>
+                                    @if (User.Identity.IsAuthenticated == true && (User.IsInRole(Roles.Admin.ToString()) || User.IsInRole(Roles.Manager.ToString()))){
+                                        <a asp-action="Edit" asp-area="Customer" asp-controller="Category" asp-action="edit" asp-route-id="@product.ID">Edit</a> 
+                                        <a asp-action="Delete" asp-area="Customer" asp-controller="Category" asp-action="delete" asp-route-id="@product.ID">Delete</a>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
+                </div>
             </div>
-        </div>
-    </section>
-   
-    }
-
-    <h1 align="center" style="padding-top: 40px;">Kategorie</h1>
-
-    <section style="padding-top: 40px; padding-bottom: 50px">
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <div class="card">
-                        <img class="card-img-top" src="" alt="">
-                            <div class="card-body">
-                            <h5 class="card-title">Zelenina</h5>
-                            
-                            <a asp-area="admin" asp-controller="category" asp-route-id="/Areas/Customer/Category" class="btn btn-primary">Seznam produktů</a>
-                           
-                        </div>
-                    </div>
-                </div>    
-            </div>
-        </div>
-    </section>
+        </section>
+     }
 }
 
 @section Scripts

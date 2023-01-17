@@ -26,11 +26,13 @@ namespace UTB.Eshop.Web.Controllers
         {
             List<CarouselSlide> carouselSlides = eshopDb.CarouselSlides.ToList();
             List<Product> products = eshopDb.Products.ToList();
+            List<Category> category = eshopDb.Category.ToList();
 
             HomeIndexViewModel hiVM = new HomeIndexViewModel()
             {
                 CarouselSlides = carouselSlides,
-                Products = products
+                Products = products,
+                Category = category
             };
 
             return View(hiVM);

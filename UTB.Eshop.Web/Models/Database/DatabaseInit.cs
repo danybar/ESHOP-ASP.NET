@@ -51,52 +51,51 @@ namespace UTB.Eshop.Web.Models.Database
             Product cs1 = new Product()
             {
                 ID = 1,
-                Name = "Chleba",
+                Name = "Paprika",
                 Price = 100,
-                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
-                ImageAlt = "First slide",
-                CategoryId = "zelenina"
-
+                ImageSrc = "/img/product/paprika.png",
+                ImageAlt = "paprika",
+                CategoryId = "zelenina",
             };
 
             Product cs2 = new Product()
             {
                 ID = 2,
-                Name = "Máslo",
+                Name = "Jahody",
                 Price = 75,
-                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
-                ImageAlt = "First slide",
-                CategoryId = "ovoce"
+                ImageSrc = "/img/product/jahody.png",
+                ImageAlt = "jahody",
+                CategoryId = "ovoce",
             };
 
             Product cs3 = new Product()
             {
                 ID = 3,
-                Name = "Perlivě neperlivá voda",
+                Name = "Mrkev",
                 Price = 40,
-                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
-                ImageAlt = "First slide",
-                CategoryId = "zelenina"
+                ImageSrc = "/img/product/mrkev.png",
+                ImageAlt = "mrkev",
+                CategoryId = "zelenina",
             };
 
             Product cs4 = new Product()
             {
                 ID = 4,
-                Name = "Tácek",
+                Name = "Špenát",
                 Price = 10,
-                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
-                ImageAlt = "First slide",
-                CategoryId = "ovoce"
+                ImageSrc = "/img/product/spenat.png",
+                ImageAlt = "zelenina",
+                CategoryId = "zelenina",
             };
 
             Product cs5 = new Product()
             {
                 ID = 5,
-                Name = "Ubrousky",
+                Name = "Rajče",
                 Price = 50,
-                ImageSrc = "/img/carousel/how-to-become-an-information-technology-specialist160684886950141.jpg",
-                ImageAlt = "First slide",
-                CategoryId = "zelenina"
+                ImageSrc = "/img/product/rajce.png",
+                ImageAlt = "rajce",
+                CategoryId = "zelenina",
             };
 
             products.Add(cs1);
@@ -106,6 +105,41 @@ namespace UTB.Eshop.Web.Models.Database
             products.Add(cs5);
 
             return products;
+        }
+
+        public List<Category> CreateCategory()
+        {
+            List<Category> category = new List<Category>();
+
+            Category cs1 = new Category()
+            {
+                ID = 1,
+                IdName = "zelenina",
+                ImageSrc = "/img/product/22.5._tradicni ceska zelenina_shutterstock_409633858.jpg",
+                ImageAlt = "zelenina",
+            };
+
+            Category cs2 = new Category()
+            {
+                ID = 2,
+                IdName = "ovoce",
+                ImageSrc = "/img/product/ovoce.png",
+                ImageAlt = "ovoce",
+            };
+
+            Category cs3 = new Category()
+            {
+                ID = 3,
+                IdName = "uzenina",
+                ImageSrc = "/img/product/24.7._uzeniny_shutterstock_529443133.jpg",
+                ImageAlt = "uzenina",
+            };
+
+            category.Add(cs1);
+            category.Add(cs2);
+            category.Add(cs3);
+
+            return category;
         }
 
         public List<Role> CreateRoles()

@@ -8,5 +8,6 @@ namespace UTB.Eshop.Web.Models.ViewModels
     {
         public IList<CarouselSlide> CarouselSlides { get; set; }
         public IList<Product> Products { get; set; }
+        public IList<Category> Category { get; set; }
     }
 }

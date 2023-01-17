@@ -1,4 +1,4 @@
-﻿@model ProductFileRequired
+﻿@model CategoryFileRequired
 
 @{
     ViewData["Title"] = "Create";
@@ -6,25 +6,16 @@
 
 <h1>Create</h1>
 
-<h4>Product</h4>
+<h4>Category</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">Kategorie</label>
-                @Html.DropDownList("CategoryId", new SelectList(ViewBag.data, "IdName", "IdName"))
+                <label asp-for="IdName" class="control-label"></label>
+                <input asp-for="IdName" class="form-control" />
+                <span asp-validation-for="IdName" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="Image">Image</label>
