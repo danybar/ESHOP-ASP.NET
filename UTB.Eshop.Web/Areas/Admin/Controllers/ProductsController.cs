@@ -180,9 +180,25 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            var img = product.ImageSrc;
+            var path = Directory.GetCurrentDirectory() + "/wwwroot/" + img;
+            var dbImage = _context.Products.Where(x => x.ImageSrc == product.ImageSrc && x.ID != id);
+
+            if (dbImage.Any())
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                System.IO.File.Delete(path);
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         private bool ProductExists(int id)
