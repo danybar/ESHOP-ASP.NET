@@ -1,8 +1,6 @@
-﻿console.log("wasd");
-$.validator.addMethod('filesize',
+﻿$.validator.addMethod('filesize',
     function (value, element, params) {
         var size = params[1];
-        console.log("ww");
         var fileSize = 0;
         if (element && element.files && element.files.length > 0) {
             fileSize = element.files[0].size;
