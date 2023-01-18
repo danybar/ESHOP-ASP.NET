@@ -131,7 +131,12 @@ namespace UTB.Eshop.Web.Areas.Admin.Controllers
                 fileUpload.FileLength = 5_000_000;
                
                 product.ImageSrc = await fileUpload.FileUploadAsync(product.Image, Path.Combine("img", "product"));
-              
+
+                if (product.ImageSrc == null)
+                {
+                    product.ImageSrc = _context.Products.First(product => id == product.ID).ImageSrc;
+                }
+
                 _context.Update(product);
                 await _context.SaveChangesAsync();
             }

@@ -9,6 +9,8 @@
 
     <h1 align="center" style="padding-top: 40px;">Kategorie: @ViewBag.category</h1>
 
+    <a href="/Customer/Category/?category=@ViewBag.category&sort=true" class="btn btn-primary">Seřadit dle nejprodávanějších</a>
+
     <section style="padding-top: 40px; padding-bottom: 50px">
         <div class="container">
             <div class="row">
@@ -28,11 +30,13 @@
             </div>
         </div>
     </section>
+
+
 }
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 <nav aria-label="Page navigation example">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new{page = page, category = ViewBag.category}))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new{page = page, category = ViewBag.category, sort=ViewBag.status}))
  </nav>
 @section Scripts
 {

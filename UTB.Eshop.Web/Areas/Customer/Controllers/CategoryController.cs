@@ -33,20 +33,27 @@ namespace UTB.Eshop.Web.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? page, string category, string sort)
+        public IActionResult Index(int? page, string category, bool sort)
         {
 
             int pageSize = 3;
             int pageIndex = 1;
 
+            ViewBag.status = false;
+
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            if (category != null) {
+            if (category != null)
+            {
                 ViewBag.category = category;
-                IPagedList<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).ToPagedList(pageIndex, pageSize);
-                return View(products);
+                List<Product> products = eshopDb.Products.Where(p => p.CategoryId == category).OrderBy(p => p.ID).ToList();
+
+                if (sort == true) {
+                    ViewBag.status = true;
+                    products = products.OrderByDescending(p => eshopDb.OrderItems.Where(oI => oI.ProductID == p.ID).Sum(oI => oI.Amount)).ToList();
+                }
+                return View(products.ToPagedList(pageIndex, pageSize));
             }
-            
             return Redirect("../Home#category");
         }
 
